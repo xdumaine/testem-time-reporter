@@ -1,6 +1,6 @@
 {
   "name": "testem-time-reporter",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "A testem reporter for highlighting tests",
   "main": "index.js",
   "scripts": {
