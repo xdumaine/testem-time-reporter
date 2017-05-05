@@ -1,0 +1,28 @@
+{
+  "name": "testem-time-reporter",
+  "version": "1.0.0",
+  "description": "A testem reporter for highlighting tests",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xdumaine/testem-time-reporter.git"
+  },
+  "keywords": [
+    "testem",
+    "reporter"
+  ],
+  "author": "Xander Dumaine <xander.dumaine@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mypurecloud/testem-time-reporter/issues"
+  },
+  "homepage": "https://github.com/mypurecloud/testem-time-reporter#readme",
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^3.3.0",
+    "semistandard": "^11.0.0"
+  }
+}
