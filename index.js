@@ -26,8 +26,8 @@ TimeReporter.prototype = {
     }
     if (data.failed) {
       write(chalk.red(`\nTest Failure - ${data.name.trim()}\n`));
-      write(data.error.message + '\n');
-      write(data.error);
+      write(JSON.stringify(data.error.message, null, 2) + '\n');
+      write(typeof data.error === 'string' ? data.error : JSON.stringify(data.error, null, 2));
     }
     if (data.passed) {
       if (data.runDuration > this.longestTest.runDuration) {
