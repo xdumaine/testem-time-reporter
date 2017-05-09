@@ -18,10 +18,10 @@ TimeReporter.prototype = {
   writeFailure: function (data) {
     write(chalk.red(`\nTest Failure - ${data.name.trim()}\n`));
     if (data.error && data.error.message) {
-      write(chalk.red(data.error.message) + '\n');
-      write(chalk.red(data.error.stack) + '\n');
+      write(`\t ${chalk.red(data.error.message)} \n`);
+      write(`\t${chalk.red(data.error.stack)} \n`);
     } else {
-      write(chalk.red(`${JSON.stringify(data)}`));
+      write(`\t ${chalk.red(JSON.stringify(data))} \n`);
     }
     this.failures.push(data);
   },
