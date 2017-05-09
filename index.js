@@ -17,11 +17,11 @@ function TimeReporter (opts) {
 TimeReporter.prototype = {
   writeFailure: function (data) {
     write(chalk.red(`\nTest Failure - ${data.name.trim()}\n`));
-    if (data.error) {
-      write(JSON.stringify(data.error.message, null, 2) + '\n');
-      write(typeof data.error === 'string' ? data.error : JSON.stringify(data.error, null, 2));
+    if (data.error && data.error.message) {
+      write(chalk.red(data.error.message) + '\n');
+      write(chalk.red(data.error.stack) + '\n');
     } else {
-      write(chalk.red(`\t Test failed with no error object. ${JSON.stringify(data)}`));
+      write(chalk.red(`${JSON.stringify(data)}`));
     }
     this.failures.push(data);
   },
@@ -41,6 +41,11 @@ TimeReporter.prototype = {
       }
       if (this.opts.sort && !this.done && data.runDuration > 500) {
         this.longTests.push(data);
+        dot = true;
+        if (!this.previousDot) {
+          write('\n');
+        }
+        write('⌛️');
         return;
       }
       const result = `\n${data.runDuration}ms - ${data.name.trim()}`;
