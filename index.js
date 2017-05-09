@@ -14,6 +14,17 @@ function TimeReporter (opts) {
   this.longTests = [];
 }
 
+function writeFailure (data) {
+  write(chalk.red(`\nTest Failure - ${data.name.trim()}\n`));
+  if (data.error) {
+    write(JSON.stringify(data.error.message, null, 2) + '\n');
+    write(typeof data.error === 'string' ? data.error : JSON.stringify(data.error, null, 2));
+  } else {
+    write(chalk.red(`\t Test failed with no error object. ${JSON.stringify(data)}`));
+  }
+  this.failures.push(data);
+}
+
 TimeReporter.prototype = {
   report: function (prefix, data) {
     this.runDuration += data.runDuration;
@@ -22,10 +33,7 @@ TimeReporter.prototype = {
       write(chalk.blue(`\nTest Skipped - ${data.name.trim()}`));
     }
     if (data.failed) {
-      write(chalk.red(`\nTest Failure - ${data.name.trim()}\n`));
-      write(JSON.stringify(data.error.message, null, 2) + '\n');
-      write(typeof data.error === 'string' ? data.error : JSON.stringify(data.error, null, 2));
-      this.failures.push(data);
+      writeFailure(data);
     }
     if (data.passed) {
       if (data.runDuration > this.longestTest.runDuration) {
@@ -64,11 +72,7 @@ TimeReporter.prototype = {
 
     if (this.failures.length) {
       write('\n Failing tests: \n');
-      this.failures.forEach(data => {
-        write(chalk.red(`\nTest Failure - ${data.name.trim()}\n`));
-        write(JSON.stringify(data.error.message, null, 2) + '\n');
-        write(typeof data.error === 'string' ? data.error : JSON.stringify(data.error, null, 2));
-      });
+      this.failures.forEach(writeFailure);
     }
     write(`\nLEGEND: ${chalk.blue('Skipped')} ${chalk.magenta('Tests > 2 seconds')} ${chalk.red('Tests > 1 second')} ${chalk.yellow('Tests > 0.5 seconds')}\n`);
   }
