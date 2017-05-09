@@ -3,6 +3,7 @@ const chalk = require('chalk');
 let write;
 
 function TimeReporter (opts) {
+  opts = opts || {};
   this.out = opts.out || process.stdout;
   this.runDuration = 0;
   this.previousDot = true;
