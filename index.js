@@ -41,11 +41,11 @@ TimeReporter.prototype = {
       }
       if (this.opts.sort && !this.done && data.runDuration > 500) {
         this.longTests.push(data);
-        dot = true;
         if (!this.previousDot) {
           write('\n');
         }
-        write('⌛️');
+        write('🐢 ');
+        this.previousDot = true;
         return;
       }
       const result = `\n${data.runDuration}ms - ${data.name.trim()}`;
@@ -60,7 +60,7 @@ TimeReporter.prototype = {
         if (!this.previousDot) {
           write('\n');
         }
-        write('.');
+        write(this.opts.sort ? '🐇 ' : '.');
       }
     }
     this.previousDot = dot;
