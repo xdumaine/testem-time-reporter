@@ -2,24 +2,20 @@
 const chalk = require('chalk');
 let write;
 
-function TimeReporter (out) {
-  this.out = out || process.stdout;
+function TimeReporter (opts) {
+  this.out = opts.out || process.stdout;
   this.runDuration = 0;
   this.previousDot = true;
+  this.opts = opts;
+
   write = this.out.write.bind(this.out);
-  this.tests = {};
   this.failures = [];
   this.longestTest = { runDuration: 0 };
+  this.longTests = [];
 }
 
 TimeReporter.prototype = {
   report: function (prefix, data) {
-    // This is stupid, for some reason report was being called twice for every test.
-    if (this.tests[data.name.trim()]) {
-      return;
-    }
-    this.tests[data.name.trim()] = true;
-
     this.runDuration += data.runDuration;
     let dot = false;
     if (data.skipped) {
@@ -34,6 +30,10 @@ TimeReporter.prototype = {
     if (data.passed) {
       if (data.runDuration > this.longestTest.runDuration) {
         this.longestTest = data;
+      }
+      if (this.opts.sort && !this.done && data.runDuration > 500) {
+        this.longTests.push(data);
+        return;
       }
       const result = `\n${data.runDuration}ms - ${data.name.trim()}`;
       if (data.runDuration > 2000) {
@@ -53,14 +53,15 @@ TimeReporter.prototype = {
     this.previousDot = dot;
   },
   finish: function () {
-    if (this.finished) {
-      return;
-    }
-    this.finished = true;
-    write(`\n Tests completed in ${this.runDuration / 1000} seconds \n`);
-    if (this.longestTest.name) {
+    this.done = true;
+    if (this.opts.sort && this.longTests.length) {
+      const sorted = this.longTests.sort((a, b) => a.runDuration < b.runDuration ? -1 : 1);
+      sorted.forEach(data => this.report(null, data));
+    } else if (this.longestTest.name) {
       write(`\n Longest test - ${this.longestTest.runDuration}ms - ${this.longestTest.name.trim()}\n`);
     }
+    write(`\n Tests completed in ${this.runDuration / 1000} seconds \n`);
+
     if (this.failures.length) {
       write('\n Failing tests: \n');
       this.failures.forEach(data => {
