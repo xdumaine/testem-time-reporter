@@ -77,7 +77,7 @@ TimeReporter.prototype = {
 
     if (this.failures.length) {
       write('\n Failing tests: \n');
-      this.failures.forEach(this.writeFailure);
+      this.failures.forEach(this.writeFailure.bind(this));
     }
     write(`\nLEGEND: ${chalk.blue('Skipped')} ${chalk.magenta('Tests > 2 seconds')} ${chalk.red('Tests > 1 second')} ${chalk.yellow('Tests > 0.5 seconds')}\n`);
   }
