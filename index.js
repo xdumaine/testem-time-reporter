@@ -28,6 +28,7 @@ TimeReporter.prototype = {
   },
 
   report: function (prefix, data) {
+    data.runDuration = data.runDuration || 0; // so that math doesn't break for null/undefined
     this.runDuration += data.runDuration;
     let dot = false;
     if (data.skipped) {
