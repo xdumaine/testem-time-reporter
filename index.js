@@ -18,9 +18,17 @@ function TimeReporter (opts) {
 TimeReporter.prototype = {
   writeFailure: function (data) {
     write(chalk.red(`\nTest Failure - ${data.name.trim()}\n`));
-    if (data.error && data.error.message) {
-      write(`\t ${chalk.red(data.error.message)} \n`);
-      write(`\t${chalk.red(data.error.stack)} \n`);
+    if (data.error) {
+      if (data.error.message) {
+        write(`\t ${chalk.red(data.error.message)} \n`);
+      }
+      if (data.error.actual && data.error.expected) {
+        write(`\t Actual  : ${chalk.red(data.error.actual)}`);
+        write(`\t Expected: ${chalk.yellow(data.error.expected)}`);
+      }
+      if (data.error.stack) {
+        write(`\t${chalk.red(data.error.stack)} \n`);
+      }
     } else {
       write(`\t ${chalk.red(JSON.stringify(data))} \n`);
     }
