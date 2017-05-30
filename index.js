@@ -23,8 +23,8 @@ TimeReporter.prototype = {
         write(`\t ${chalk.red(data.error.message)} \n`);
       }
       if (data.error.hasOwnProperty('actual') && data.error.hasOwnProperty('expected')) {
-        write(`\t Actual  : ${chalk.red(data.error.actual)}`);
-        write(`\t Expected: ${chalk.yellow(data.error.expected)}`);
+        write(`\t Actual  : ${chalk.yellow(data.error.actual)}\n`);
+        write(`\t Expected: ${chalk.yellow(data.error.expected)}\n`);
       }
       if (data.error.stack) {
         write(`\t${chalk.red(data.error.stack)} \n`);
