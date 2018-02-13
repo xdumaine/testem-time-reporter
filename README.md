@@ -35,6 +35,13 @@ Run tests in an Ember CLI project, reporting only failures:
 
     ember test --config-file ~/work/project/testem.js
 
+## Colors
+
+* Magenta > 2 seconds
+* Red > 1 second
+* Yellow > 0.5 seconds
+* Blue skipped
+
 ## Notes
 
 This currently doesn't work with `ember test --module some-module` because Ember CLI
