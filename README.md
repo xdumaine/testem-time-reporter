@@ -37,10 +37,10 @@ Run tests in an Ember CLI project, reporting only failures:
 
 ## Colors
 
-* Magenta > 2 seconds
-* Red > 1 second
+* Red > 2 seconds
+* Magenta > 1 second
 * Yellow > 0.5 seconds
-* Blue skipped
+* Blue is for skipped tests
 
 ## Notes
 

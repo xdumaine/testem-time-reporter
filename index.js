@@ -60,9 +60,9 @@ TimeReporter.prototype = {
       }
       const result = `\n${data.runDuration}ms - ${data.name.trim()}`;
       if (data.runDuration > 2000) {
-        write(chalk.magenta(result));
-      } else if (data.runDuration > 1000) {
         write(chalk.red(result));
+      } else if (data.runDuration > 1000) {
+        write(chalk.magenta(result));
       } else if (data.runDuration > 500) {
         write(chalk.yellow(result));
       } else {
@@ -89,7 +89,7 @@ TimeReporter.prototype = {
       write('\n Failing tests: \n');
       this.failures.forEach(this.writeFailure.bind(this));
     }
-    write(`\nLEGEND: ${chalk.blue('Skipped')} ${chalk.magenta('Tests > 2 seconds')} ${chalk.red('Tests > 1 second')} ${chalk.yellow('Tests > 0.5 seconds')}\n`);
+    write(`\nLEGEND: ${chalk.blue('Skipped')} ${chalk.red('Tests > 2 seconds')} ${chalk.magenta('Tests > 1 second')} ${chalk.yellow('Tests > 0.5 seconds')}\n`);
   }
 };
 
